@@ -1,9 +1,9 @@
 import hashlib
 import os
 from os.path import exists
-from logger_hander import logger
+from utils.logger_hander import logger
 from langchain_core.documents import Document
-from langchain_community.document_loaders import PyPDFLoader, TxtLoader, TextLoader
+from langchain_community.document_loaders import PyPDFLoader, TextLoader
 
 
 def get_file_md5_hex(file_path:str) :
@@ -33,7 +33,7 @@ def listdir_with_allowed_type(path: str,allowed_types: tuple[str]):
         logger.error(f"[file path]Directory {path} is not directory")
         return allowed_types
     for f in os.listdir(path):
-        if f.endswith(allowed_types):
+        if f.endswith(tuple(allowed_types)):
             result_files.append(os.path.join(path,f))
     return tuple(result_files)
 def pdf_loader (path:str,password=None)->list[Document] :
